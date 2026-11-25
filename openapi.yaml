@@ -1,0 +1,40 @@
+openapi: 3.2.0
+info:
+  title: $ref sibling properties
+  version: 1.0.0
+paths:
+  /items:
+    post:
+      operationId: createItem
+      summary: Create an item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemCreate'
+      responses:
+        '201':
+          description: Item created.
+components:
+  schemas:
+    ItemWrite:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the item.
+      required:
+        - name
+    ItemCreate:
+      $ref: '#/components/schemas/ItemWrite'
+      unevaluatedProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+            - draft
+            - scheduled
+          description: Publication status assigned when you create the item.
+      required:
+        - status
